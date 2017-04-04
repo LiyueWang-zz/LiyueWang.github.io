@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN,en,default">
+<head prefix="og: http://ogp.me/ns#">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content="坐而论道不若起而行之">
+    <title>Upgrading to NUnit 3 | 对生存的领会</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="Recently, we have been working on upgrading NUnit from 2 to 3 for all test projects in both Core and Customization, which was done by this week. For now, we just upgrade to NUnit 3 and make it work pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Upgrading to NUnit 3">
+<meta property="og:url" content="http://liyuewang.com/en/Upgrading-to-NUnit-3/index.html">
+<meta property="og:site_name" content="对生存的领会">
+<meta property="og:description" content="Recently, we have been working on upgrading NUnit from 2 to 3 for all test projects in both Core and Customization, which was done by this week. For now, we just upgrade to NUnit 3 and make it work pr">
+<meta property="og:updated_time" content="2017-04-04T15:59:55.425Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Upgrading to NUnit 3">
+<meta name="twitter:description" content="Recently, we have been working on upgrading NUnit from 2 to 3 for all test projects in both Core and Customization, which was done by this week. For now, we just upgrade to NUnit 3 and make it work pr">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:liyuewang@outlook.com",
+  "image": "undefined",
+  "name": "Liyue (Sara) Wang",
+  "url": "http://liyuewang.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.gmirror.org/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>对生存的领会</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header">Liyue (Sara) Wang</a>
+                    
+                        <div class="meta">
+                            Programmer / Lover of Wisdom
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Kitchener, Canada</div>
+                        </div>
+                        
+                        
+                        <div class="item">
+                            <i class="mail icon" style="float: left"></i>
+                            <div class="content">
+                                <a href="mailto:liyuewang@outlook.com">liyuewang@outlook.com</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/liyuewang"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="/images/wechat_card.jpg"><i class="large wechat icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item" >
+        <i class="home icon"></i>
+        Home
+    </a>
+
+    
+    
+
+    
+
+    
+    <a href="/archives" class="item" >
+        <i class="list icon"></i>
+        Archives
+    </a>
+
+    
+    
+
+    
+
+    
+    <a href="http://sackuangyan.com/blog/" class="item" >
+        <i class="idea icon"></i>
+        大地
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-Upgrading-to-NUnit-3" class="ui main container article-type-post">
+
+    
+
+    <div class="ui divided grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="thirteen wide computer thirteen wide tablet sixteen wide mobile column">
+                
+
+<h1 class="ui header">
+    
+    Upgrading to NUnit 3
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <p>Recently, we have been working on upgrading NUnit from 2 to 3 for all test projects in both Core and Customization, which was done by this week. For now, we just upgrade to NUnit 3 and make it work properly as NUnit 2. NUnit 3 has a bunch of new features we could take advantage of them to optimize our tests, but we haven&#x2019;t done yet. Here is the post to list some of the new features in NUnit 3 and a few breaking changes we have encountered during upgrading.</p>
+<h3 id="Parallelable"><a href="#Parallelable" class="headerlink" title="Parallelable"></a>Parallelable</h3><p>NUnit 3 provides two forms of parallel excution, which we could use to optimize our testing performance.</p>
+<h4 id="Run-multiple-test-assemblies-in-parallel"><a href="#Run-multiple-test-assemblies-in-parallel" class="headerlink" title="Run multiple test assemblies in parallel"></a>Run multiple test assemblies in parallel</h4><p>We can use <code>--process</code> option and <code>--agents</code> option on the nunit console runner command-line to run multiple test assemblies in parallel.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nunit3-console.exe --process=Multiple --agents=NUMBER</div></pre></td></tr></table></figure></p>
+<p>Here if the <code>--agents</code> option is not specified, all processes run tests at the same time. If <code>--agents=n</code> is specified, no more than <code>n</code> of the processes may be allowed to run simultaneously. </p>
+<p>To run multiple assemblies in parallel, we should make sure that the tests in each assembly must not use any common external resources such as files or databases.</p>
+<h4 id="Run-multiple-tests-within-an-assembly-in-parallel"><a href="#Run-multiple-tests-within-an-assembly-in-parallel" class="headerlink" title="Run multiple tests within an assembly in parallel"></a>Run multiple tests within an assembly in parallel</h4><p>Tests that are eligible to be run in parallel with other tests must be identified using the <a href="https://github.com/nunit/docs/wiki/Parallelizable-Attribute" target="_blank" rel="external">Parallelizable Attribute</a>. For now, parallel execution only applies down to the TestFixture level. Any <em>ParallelizableAttribute</em> placed on a method is not yet implemented and will be ignored.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[TestFixture]</div><div class="line">[Parallelizable(ParallelScope.Fixtures )]</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">test</span>{</div><div class="line"></div><div class="line">	[Test]</div><div class="line">	[Parallelizable]	<span class="comment">//not implemented yet and will be ignored for now</span></div><div class="line">	<span class="keyword">public</span> <span class="keyword">void</span> test{</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure></p>
+<p>The default number of threads for running tests is equal to the number of processors or 2, whichever is greater. You can control the number of threads by use of the <em>assembly-level</em> <a href="https://github.com/nunit/docs/wiki/LevelOfParallelism-Attribute" target="_blank" rel="external">LevelOfParallelism Attribute</a>. Here if <code>LevelOfParallelism(0)</code> is specified, tests will not be run in parallel.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[assembly:LevelOfParallelism(<span class="number">3</span>)]</div></pre></td></tr></table></figure></p>
+<p>Alternatively, you can use the <code>--workers</code> option on the command-line, which takes precedence if specified.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nunit3-console.exe --workers=NUMBER</div></pre></td></tr></table></figure></p>
+<p>If <code>--workers=0</code> is specified, tests are run sequentially on a single thread. And if <code>--workers=n</code> is specified, <code>n + 3</code> workers are actually created and up to <code>n + 1</code> workers may be active at one time. More details see <a href="https://github.com/nunit/docs/wiki/Parallel-Test-Execution#how-it-works" target="_blank" rel="external">how it works</a>.</p>
+<p>We should be very careful to run tests in parallel, as race conditions may result in problems that arise only intermittently and are very difficult to resolve. For example, using of non-readonly statics or access to common internal or external resources can easily break the tests or hang the test run. And sharing use of instance members will be dangerous as well once parallel execution of test cases is implemented.</p>
+<h3 id="Breaking-changes-from-NUnit-2-to-NUnit-3"><a href="#Breaking-changes-from-NUnit-2-to-NUnit-3" class="headerlink" title="Breaking changes from NUnit 2 to NUnit 3"></a>Breaking changes from NUnit 2 to NUnit 3</h3><p>There is a Breaking Changes list in the <a href="https://github.com/nunit/docs/wiki/Breaking-Changes" target="_blank" rel="external">document</a> from NUnit 3. Here are a few more breaking changes not listed when we do the upgrading.</p>
+<h4 id="Assert-AreEqual-amp-CollectionAssert-AreEqual-NUnit-Issue"><a href="#Assert-AreEqual-amp-CollectionAssert-AreEqual-NUnit-Issue" class="headerlink" title="Assert.AreEqual &amp; CollectionAssert.AreEqual - NUnit Issue"></a>Assert.AreEqual &amp; CollectionAssert.AreEqual - <a href="https://github.com/nunit/nunit/issues/2097" target="_blank" rel="external"><em>NUnit Issue</em></a></h4><ul class="ui list">
+<li><code>CollectionAssert.AreEqual</code> doesn&#x2019;t compare items when underlying type implements <code>IEquatable&lt;T&gt;</code></li>
+</ul>
+<p>For example, we have a <code>SimpleEnumerable</code> implements <code>IEquatable&lt;SimpleEnumerable&gt;</code> as follows:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class SimpleEnumerable : IEnumerable, IEquatable&lt;SimpleEnumerable&gt; {</div><div class="line">    private readonly List&lt;object&gt; contents = new List&lt;object&gt;();</div><div class="line"></div><div class="line">    public SimpleEnumerable(IEnumerable&lt;object&gt; source) {</div><div class="line">        this.contents = new List&lt;object&gt;(source);</div><div class="line">    }</div><div class="line"></div><div class="line">    public SimpleEnumerable(params object[] source) {</div><div class="line">        this.contents = new List&lt;object&gt;(source);</div><div class="line">    }</div><div class="line"></div><div class="line">    #region IEnumerable Members</div><div class="line"></div><div class="line">    public IEnumerator GetEnumerator() {</div><div class="line">        return contents.GetEnumerator();</div><div class="line">    }</div><div class="line"></div><div class="line">    bool IEquatable&lt;SimpleEnumerable&gt;.Equals(SimpleEnumerable other) {</div><div class="line">        return Object.ReferenceEquals(this, other);</div><div class="line">    }</div><div class="line"></div><div class="line">    #endregion</div><div class="line">}</div></pre></td></tr></table></figure></p>
+<p>Then the test below will fail, since <code>Object.ReferenceEquals( set1, set2 ) == false</code>, although the items are the same.<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> set1 = <span class="keyword">new</span> SimpleEnumerable(<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>);</div><div class="line"><span class="keyword">var</span> set2 = <span class="keyword">new</span> SimpleEnumerable(<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>);</div><div class="line">  </div><div class="line">CollectionAssert.AreEqual(set1,set2);</div></pre></td></tr></table></figure></p>
+<ul class="ui list">
+<li><code>Assert.AreEqual</code> doesn&#x2019;t compare full object when an <code>IEnumerable&lt;T&gt;</code></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">internal sealed class SimpleGrouping&lt;TKey, TElement&gt; : IGrouping&lt;TKey,TElement&gt; {</div><div class="line">	private readonly TKey _key;</div><div class="line">	private readonly List&lt;TElement&gt; _elements;</div><div class="line"></div><div class="line">	public SimpleGrouping(TKey key, params TElement[] elements) {</div><div class="line">		_key = key;</div><div class="line">		_elements = elements.ToList();</div><div class="line">	}</div><div class="line"></div><div class="line">	public TKey Key {</div><div class="line">		get { return _key; }</div><div class="line">	}</div><div class="line"></div><div class="line">	public IEnumerator&lt;TElement&gt; GetEnumerator() {</div><div class="line">		return _elements.GetEnumerator();</div><div class="line">	}</div><div class="line"></div><div class="line">	IEnumerator IEnumerable.GetEnumerator() {</div><div class="line">		return _elements.GetEnumerator();</div><div class="line">	}</div><div class="line"></div><div class="line">	public override bool Equals(object obj) {</div><div class="line">		SimpleGrouping&lt;TKey, TElement&gt; other = obj as SimpleGrouping&lt;TKey, TElement&gt;;</div><div class="line">		if (other == null) {</div><div class="line">			return false;</div><div class="line">		}</div><div class="line"></div><div class="line">		if (!this._key.Equals(other._key)) {</div><div class="line">			return false;</div><div class="line">		}</div><div class="line"></div><div class="line">		if (this._elements.Count != other._elements.Count) {</div><div class="line">			return false;</div><div class="line">		}</div><div class="line"></div><div class="line">		for (int i = 0; i &lt; this._elements.Count; i++) {</div><div class="line">			if (!_elements[i].Equals(other._elements[i])) {</div><div class="line">				return false;</div><div class="line">			}</div><div class="line">		}</div><div class="line"></div><div class="line">		return true;</div><div class="line">	}</div><div class="line"></div><div class="line">	public override int GetHashCode() {</div><div class="line">		return _key.GetHashCode();</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SimpleGrouping&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; objA = <span class="keyword">new</span> SimpleGrouping&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;(<span class="string">&quot;abc&quot;</span>, <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">SimpleGrouping&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; objB = <span class="keyword">new</span> SimpleGrouping&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;(<span class="string">&quot;xyz&quot;</span>, <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">Assert.AreNotEqual(objA, objB, <span class="string">&quot;Should not be equal because the keys don&apos;t match&quot;</span>);</div></pre></td></tr></table></figure>
+<p>This test will fail now, since <code>IGrouping&lt;T&gt;</code> is compared as an <code>IEnumerable&lt;T&gt;</code>, although normally it shouldn&#x2019;t be.</p>
+<h4 id="NUnit-3-runner-will-fail-on-assemblies-with-no-Tests-Unlike-NUnit-2-NUnit-Issue"><a href="#NUnit-3-runner-will-fail-on-assemblies-with-no-Tests-Unlike-NUnit-2-NUnit-Issue" class="headerlink" title="NUnit 3 runner will fail on assemblies with no Tests, Unlike NUnit 2 - NUnit Issue"></a>NUnit 3 runner will fail on assemblies with no Tests, Unlike NUnit 2 - <a href="https://github.com/nunit/nunit-console/issues/62" target="_blank" rel="external"><em>NUnit Issue</em></a></h4><p>If an assembly DOESN&#x2019;T    reference <em>nunit.framework</em>, should use <code>--skipnontestassemblies</code> option on the command-line to skip it, otherwise it will be invalid.<br>If an assembly DOES reference <em>nunit.framework</em>, the assembly should HAVE a <em>NonTestAssemblyAttribute</em> AND use <code>--skipnontestassemblies</code> option to skip, otherwise it will be invalid. </p>
+<p>During upgrading, we found a few TestFramework assemblies reference <em>nunit.framwork</em> but has no tests, so we have to add <em>NonTestAssemblyAttribute</em> for these assemblies (i.e. D2L.LP.Tools.DataPurgeArchive.TestFramework.dll).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[assembly: NUnit.Framework.NonTestAssembly]</div></pre></td></tr></table></figure></p>
+<p>Besides, we also deleted a bunch of test assemblies that has no tests, which will be invalid under NUnit 3 runner and fail the CI builds. </p>
+<h4 id="Async-void-methods-are-no-longer-supported-use-Async-Task-instead-NUnit-Source-Code"><a href="#Async-void-methods-are-no-longer-supported-use-Async-Task-instead-NUnit-Source-Code" class="headerlink" title="Async void methods are no longer supported, use Async Task instead - NUnit Source Code"></a><code>Async void</code> methods are no longer supported, use <code>Async Task</code> instead - <a href="https://github.com/nunit/nunit/blob/d922adae5cd30ad5544ee693f6ae6177722e3569/src/NUnitFramework/framework/Internal/AsyncInvocationRegion.cs#L76" target="_blank" rel="external"><em>NUnit Source Code</em></a></h4><h4 id="Use-Assert-ThrowsAsync-instead-of-Assert-Throws-for-testing-if-async-methods-throw-an-exception-NUnit-Issue"><a href="#Use-Assert-ThrowsAsync-instead-of-Assert-Throws-for-testing-if-async-methods-throw-an-exception-NUnit-Issue" class="headerlink" title="Use Assert.ThrowsAsync instead of Assert.Throws for testing if async methods throw an exception - NUnit Issue"></a>Use <code>Assert.ThrowsAsync</code> instead of <code>Assert.Throws</code> for testing if async methods throw an exception - <a href="https://github.com/nunit/nunit/issues/1190" target="_blank" rel="external"><em>NUnit Issue</em></a></h4><h4 id="Small-ones"><a href="#Small-ones" class="headerlink" title="Small ones"></a>Small ones</h4><ul class="ui list">
+<li><code>TestDetails</code> updated to <code>ITest</code></li>
+<li><code>NUnit.Framework.TextMessageWriter</code> moved to <code>NUnit.Framework.Internal.TextMessageWriter</code></li>
+<li><code>NUnit.Framework.Randomizer</code> moved to <code>NUnit.Framework.Internal.Randomizer</code></li>
+<li><code>NUnit.Framework.ITestCaseData</code> moved to <code>NUnit.Framework.Interfaces.ITestCaseData</code> </li>
+</ul>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2017-04-04T06:17:10.000Z" itemprop="datePublished">2017-04-04</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a class="ui tiny button disabled"><i class="angle left icon"></i>Previous</a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/en/CSharp-in-Depth-Series-Notes-LINQ/" class="ui tiny button">
+                    
+                    CSharp in Depth Series Notes: LINQ
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+            <div class="three wide computer three wide tablet column">
+
+                <div class="ui sticky article-toc" id="article-toc">
+                    <!-- toc -->
+                    <ol class="ui ordered list"><li><a href="#Parallelable"><span>Parallelable</span></a><ol><li><a href="#Run-multiple-test-assemblies-in-parallel"><span>Run multiple test assemblies in parallel</span></a></li><li><a href="#Run-multiple-tests-within-an-assembly-in-parallel"><span>Run multiple tests within an assembly in parallel</span></a></li></ol></li><li><a href="#Breaking-changes-from-NUnit-2-to-NUnit-3"><span>Breaking changes from NUnit 2 to NUnit 3</span></a><ol><li><a href="#Assert-AreEqual-amp-CollectionAssert-AreEqual-NUnit-Issue"><span>Assert.AreEqual & CollectionAssert.AreEqual - NUnit Issue</span></a></li><li><a href="#NUnit-3-runner-will-fail-on-assemblies-with-no-Tests-Unlike-NUnit-2-NUnit-Issue"><span>NUnit 3 runner will fail on assemblies with no Tests, Unlike NUnit 2 - NUnit Issue</span></a></li><li><a href="#Async-void-methods-are-no-longer-supported-use-Async-Task-instead-NUnit-Source-Code"><span>Async void methods are no longer supported, use Async Task instead - NUnit Source Code</span></a></li><li><a href="#Use-Assert-ThrowsAsync-instead-of-Assert-Throws-for-testing-if-async-methods-throw-an-exception-NUnit-Issue"><span>Use Assert.ThrowsAsync instead of Assert.Throws for testing if async methods throw an exception - NUnit Issue</span></a></li><li><a href="#Small-ones"><span>Small ones</span></a></li></ol></li></ol>
+                </div>
+
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2017 <a href="/">Liyue (Sara) Wang</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a
+                href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>

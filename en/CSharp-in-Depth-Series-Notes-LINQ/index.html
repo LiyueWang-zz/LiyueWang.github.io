@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN,en,default">
+<head prefix="og: http://ogp.me/ns#">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta name="description" content="坐而论道不若起而行之">
+    <title>CSharp in Depth Series Notes: LINQ | 对生存的领会</title>
+
+    <!-- Open Graph -->
+    <meta name="description" content="C# 1: CoreC# 2: Solve the Issues of C# 1C# 3: Lambda, LINQ &amp;#x2013; CSharp in Depth Series Notes: LINQC# 4: Dynamic bindingC# 5: Asynchrony &amp;#x2013; CShap in Depth Series Notes: AsynchronyC# 6:C# 7-(2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSharp in Depth Series Notes: LINQ">
+<meta property="og:url" content="http://liyuewang.com/en/CSharp-in-Depth-Series-Notes-LINQ/index.html">
+<meta property="og:site_name" content="对生存的领会">
+<meta property="og:description" content="C# 1: CoreC# 2: Solve the Issues of C# 1C# 3: Lambda, LINQ &amp;#x2013; CSharp in Depth Series Notes: LINQC# 4: Dynamic bindingC# 5: Asynchrony &amp;#x2013; CShap in Depth Series Notes: AsynchronyC# 6:C# 7-(2">
+<meta property="og:updated_time" content="2017-03-30T03:25:11.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSharp in Depth Series Notes: LINQ">
+<meta name="twitter:description" content="C# 1: CoreC# 2: Solve the Issues of C# 1C# 3: Lambda, LINQ &amp;#x2013; CSharp in Depth Series Notes: LINQC# 4: Dynamic bindingC# 5: Asynchrony &amp;#x2013; CShap in Depth Series Notes: AsynchronyC# 6:C# 7-(2">
+
+    <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Person",
+  "email": "mailto:liyuewang@outlook.com",
+  "image": "undefined",
+  "name": "Liyue (Sara) Wang",
+  "url": "http://liyuewang.com"
+}
+</script>
+    <script>
+    var algoliaEnabled = false;
+    
+</script>
+
+    
+
+    
+    
+        <link href="https://fonts.gmirror.org/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
+    
+    
+        <!-- stylesheets list from config.yml -->
+        
+        <link rel="stylesheet" href="/css/aloha.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css">
+        
+        <link rel="stylesheet" href="//cdn.bootcss.com/magnific-popup.js/1.1.0/magnific-popup.min.css">
+        
+    
+
+</head>
+<body id="body" style="margin-bottom: 0;" class="pushable">
+
+    <div class="ui top fixed menu">
+        <a class="item" id="menu-icon"><i class="sidebar icon"></i></a>
+    </div>
+
+    <div id="menu-sidebar" class="ui left vertical sidebar menu">
+
+    <div id="sidebar-top">
+        <div class="content">
+            <h3>对生存的领会</h3>
+        </div>
+    </div>
+    <div class="ui container sidebar-card">
+    <div class="ui people shape content">
+        <div class="active side">
+            <div class="ui card">
+                <div class="image">
+                    <img class="ui medium bordered image" src="/images/avatar.jpg">
+                </div>
+                <div class="content">
+                    <a class="header">Liyue (Sara) Wang</a>
+                    
+                        <div class="meta">
+                            Programmer / Lover of Wisdom
+                        </div>
+                    
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+                        <div class="item">
+                            <i class="marker icon" style="float: left"></i>
+                            <div class="content">Kitchener, Canada</div>
+                        </div>
+                        
+                        
+                        <div class="item">
+                            <i class="mail icon" style="float: left"></i>
+                            <div class="content">
+                                <a href="mailto:liyuewang@outlook.com">liyuewang@outlook.com</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="extra content">
+                    <div class="ui list">
+                        
+
+                                <a href="https://github.com/liyuewang"><i class="large github icon" style="float: left"></i></a>
+
+                            
+
+                                <a href="/images/wechat_card.jpg"><i class="large wechat icon" style="float: left"></i></a>
+
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+    
+    
+
+    
+
+    
+    <a href="/index.html" class="item" >
+        <i class="home icon"></i>
+        Home
+    </a>
+
+    
+    
+
+    
+
+    
+    <a href="/archives" class="item" >
+        <i class="list icon"></i>
+        Archives
+    </a>
+
+    
+    
+
+    
+
+    
+    <a href="http://sackuangyan.com/blog/" class="item" >
+        <i class="idea icon"></i>
+        大地
+    </a>
+
+    
+
+    
+</div>
+
+    <div class="pusher body-content">
+        <div id="content" class="ui main container">
+            <!--<div class="ui one column grid">-->
+                <!--<div class="column">-->
+                    <!--<div class="ui main container">-->
+                        <div id="post-CSharp-in-Depth-Series-Notes-LINQ" class="ui main container article-type-post">
+
+    
+
+    <div class="ui divided grid">
+
+        <div class="two column row" id="article-content">
+
+            <div class="thirteen wide computer thirteen wide tablet sixteen wide mobile column">
+                
+
+<h1 class="ui header">
+    
+    CSharp in Depth Series Notes: LINQ
+</h1>
+
+
+
+                <div class="article-inner">
+
+                    <div class="article-entry" itemprop="articleBody">
+                        
+                        <p>C# 1: Core<br>C# 2: Solve the Issues of C# 1<br>C# 3: Lambda, LINQ &#x2013; <a href="/en/CSharp-in-Depth-Series-Notes-LINQ/" title="CSharp in Depth Series Notes: LINQ">CSharp in Depth Series Notes: LINQ</a><br>C# 4: Dynamic binding<br>C# 5: Asynchrony &#x2013; <a href="/en/CSharp-in-Depth-Series-Notes-Asynchrony/" title="CShap in Depth Series Notes: Asynchrony">CShap in Depth Series Notes: Asynchrony</a><br>C# 6:<br>C# 7-(20170308, VS2017): Pattern Matching, Out varaiables, Tuples, Ref locals and returns, local functions</p>
+<hr>
+<h2 id="LINQ"><a href="#LINQ" class="headerlink" title="LINQ"></a>LINQ</h2><h3 id="Ch-9-Lambda"><a href="#Ch-9-Lambda" class="headerlink" title="Ch 9: Lambda"></a>Ch 9: Lambda</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Func&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; returnLength;</div><div class="line">returnLength = <span class="keyword">delegate</span> (<span class="keyword">string</span> text) { <span class="keyword">return</span> text.Length; };</div><div class="line"></div><div class="line">Console.WriteLine(returnLength(<span class="string">&quot;Hello&quot;</span>));</div></pre></td></tr></table></figure>
+<p>Convert to lambda expression<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">string</span> text) =&gt; {<span class="keyword">return</span> text.Length; }</div></pre></td></tr></table></figure></p>
+<p>Single expression, no braces required<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">string</span> text) =&gt; text.Length</div></pre></td></tr></table></figure></p>
+<p>Let the compiler infer the parameter type<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">( text ) =&gt; text.Length</div></pre></td></tr></table></figure></p>
+<p>Remove unnecessary parentheses<br><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">text  =&gt; text.Length</div></pre></td></tr></table></figure></p>
+
+                        
+                    </div>
+
+                    
+                    
+                    
+
+                    <div class="description post-description">
+    <span class="post-description-item">
+        <time datetime="2017-03-30T03:20:32.000Z" itemprop="datePublished">2017-03-29</time>
+
+    </span>
+    <span class="post-description-item">
+        
+    </span>
+</div>
+
+                </div>
+                
+                <div id="pagination" class="nav-web ui text container pagination">
+
+    <div class="ui stackable two column divided grid container">
+        <div class="row">
+            <div class="column nav-left">
+                
+
+                <a href="/en/Upgrading-to-NUnit-3/" class="ui tiny button">
+
+                    <i class="angle left icon"></i>
+                    
+                    Upgrading to NUnit 3
+                    
+
+                </a>
+
+                
+            </div>
+            <div class="column nav-right">
+                
+
+                <a href="/en/CSharp-in-Depth-Series-Notes-Asynchrony/" class="ui tiny button">
+                    
+                    CShap in Depth Series Notes: Asynchrony
+                    
+                    <i class="angle right icon"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+                
+            </div>
+
+            
+            <div class="three wide computer three wide tablet column">
+
+                <div class="ui sticky article-toc" id="article-toc">
+                    <!-- toc -->
+                    <ol class="ui ordered list"><li><a href="#LINQ"><span>LINQ</span></a><ol><li><a href="#Ch-9-Lambda"><span>Ch 9: Lambda</span></a></li></ol></li></ol>
+                </div>
+
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+
+
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <div class="ui vertical footer segment">
+    <div class="ui center aligned container">
+        <div class="ui inverted section divider"></div>
+        &copy; 2017 <a href="/">Liyue (Sara) Wang</a>,
+        Powered by <a href="https://github.com/henryhuang/hexo-theme-aloha" target="_blank">Aloha</a> and <a
+                href="http://hexo.io/" target="_blank">Hexo</a>.
+    </div>
+</div>
+
+    </div>
+
+
+
+
+<!-- scripts list from theme config.yml -->
+
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+
+<script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch/3.18.1/algoliasearch.min.js"></script>
+
+<script src="//cdn.bootcss.com/algoliasearch-helper-js/2.13.0/algoliasearch.helper.min.js"></script>
+
+<script src="/js/semantic-ui-algolia.js"></script>
+
+<script src="/js/aloha-events.js"></script>
+
+
+
+</body>
+</html>
