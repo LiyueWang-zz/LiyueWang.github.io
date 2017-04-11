@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://liyuewang.com/en/CSharp-in-Depth-Series-Notes-Asynchrony/index.html">
 <meta property="og:site_name" content="对生存的领会">
 <meta property="og:description" content="C# 1: CoreC# 2: Solve the Issues of C# 1C# 3: Lambda, LINQ &amp;#x2013; CSharp in Depth Series Notes: LINQC# 4: Dynamic bindingC# 5: Asynchrony &amp;#x2013; CShap in Depth Series Notes: AsynchronyC# 6:C# 7-(2">
-<meta property="og:updated_time" content="2017-03-30T03:26:02.807Z">
+<meta property="og:updated_time" content="2017-04-11T02:16:23.270Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CShap in Depth Series Notes: Asynchrony">
 <meta name="twitter:description" content="C# 1: CoreC# 2: Solve the Issues of C# 1C# 3: Lambda, LINQ &amp;#x2013; CSharp in Depth Series Notes: LINQC# 4: Dynamic bindingC# 5: Asynchrony &amp;#x2013; CShap in Depth Series Notes: AsynchronyC# 6:C# 7-(2">
@@ -188,21 +188,23 @@
                         
                         <p>C# 1: Core<br>C# 2: Solve the Issues of C# 1<br>C# 3: Lambda, LINQ &#x2013; <a href="/en/CSharp-in-Depth-Series-Notes-LINQ/" title="CSharp in Depth Series Notes: LINQ">CSharp in Depth Series Notes: LINQ</a><br>C# 4: Dynamic binding<br>C# 5: Asynchrony &#x2013; <a href="/en/CSharp-in-Depth-Series-Notes-Asynchrony/" title="CShap in Depth Series Notes: Asynchrony">CShap in Depth Series Notes: Asynchrony</a><br>C# 6:<br>C# 7-(20170308, VS2017): Pattern Matching, Out varaiables, Tuples, Ref locals and returns, local functions</p>
 <hr>
-<h2 id="Asynchrony-C-5-NET4-5"><a href="#Asynchrony-C-5-NET4-5" class="headerlink" title="Asynchrony (C# 5, .NET4.5)"></a>Asynchrony (C# 5, .NET4.5)</h2><h3 id="Ch-15-Asynchrony-with-async-await"><a href="#Ch-15-Asynchrony-with-async-await" class="headerlink" title="Ch 15: Asynchrony with async/await"></a>Ch 15: Asynchrony with async/await</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//async method</span></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="keyword">int</span>&gt; <span class="title">GetPageLengthAsync</span>(<span class="params"><span class="keyword">string</span> url</span>)</span>{	</div><div class="line">	<span class="keyword">using</span> (HttpClient client = <span class="keyword">new</span> HttpClient()){</div><div class="line">		Task&lt;<span class="keyword">string</span>&gt; fetchTextTask = client.GetStringAsync(url);	<span class="comment">//asynchronous operation</span></div><div class="line">		<span class="keyword">int</span> length = (<span class="keyword">await</span> fetchTextTask).Length;</div><div class="line">		<span class="keyword">return</span> length;</div><div class="line">	}</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">//calling method</span></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintPageLength</span>(<span class="params"></span>)</span>{	</div><div class="line">	Task&lt;<span class="keyword">int</span>&gt; lengthTask = GetPageLengthAsync(<span class="string">&quot;http://google.com&quot;</span>);</div><div class="line">	Console.WriteLine(lengthTask.Result);</div><div class="line">}</div></pre></td></tr></table></figure>
+<h2 id="Asynchrony-C-5-NET4-5"><a href="#Asynchrony-C-5-NET4-5" class="headerlink" title="Asynchrony (C# 5, .NET4.5)"></a>Asynchrony (C# 5, .NET4.5)</h2><h3 id="Ch-15-Asynchrony-with-async-await"><a href="#Ch-15-Asynchrony-with-async-await" class="headerlink" title="Ch 15: Asynchrony with async/await"></a>Ch 15: Asynchrony with async/await</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//async method</span></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">async</span> Task&lt;<span class="keyword">int</span>&gt; <span class="title">GetPageLengthAsync</span>(<span class="params"><span class="keyword">string</span> url</span>)</span>{	</div><div class="line">	<span class="keyword">using</span> (HttpClient client = <span class="keyword">new</span> HttpClient()){</div><div class="line">		Task&lt;<span class="keyword">string</span>&gt; fetchTextTask = client.GetStringAsync(url);	<span class="comment">//asynchronous operation</span></div><div class="line">		<span class="keyword">int</span> length = (<span class="keyword">await</span> fetchTextTask).Length;	<span class="comment">//build continuation	</span></div><div class="line">		<span class="keyword">return</span> length;</div><div class="line">	}</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">//calling method</span></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintPageLength</span>(<span class="params"></span>)</span>{	</div><div class="line">	Task&lt;<span class="keyword">int</span>&gt; lengthTask = GetPageLengthAsync(<span class="string">&quot;http://google.com&quot;</span>);</div><div class="line">	Console.WriteLine(lengthTask.Result);</div><div class="line">}</div></pre></td></tr></table></figure>
 <h4 id="Three-return-type"><a href="#Three-return-type" class="headerlink" title="Three return type"></a>Three return type</h4><ul class="ui list">
 <li>void: compatibility with event handlers, caller doesnot care when task has filed or completed (i.e. UI button click handler)</li>
 <li>Task: caller can detect when task has failed or completed</li>
 <li>Task<tresult>: Task + return a value of type T</tresult></li>
 </ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">LoadStockPrice</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span>{</div><div class="line">	<span class="keyword">string</span> ticker = tickerInput.Text;</div><div class="line">	<span class="keyword">decimal</span> price = <span class="keyword">await</span> stockPriceService.FecthPriceAsync(ticker);</div><div class="line">	priceDisplay.Text = price.ToString(<span class="string">&quot;c&quot;</span>);</div><div class="line">}</div><div class="line"></div><div class="line">loadStockPriceButton.Click += LoadStockPrice;</div><div class="line"><span class="comment">// Event subscription is pretty much the only time returning void from an asynchronous method</span></div></pre></td></tr></table></figure>
-<h4 id="Awaitable-Pattern"><a href="#Awaitable-Pattern" class="headerlink" title="Awaitable Pattern"></a>Awaitable Pattern</h4><p>Restrictions on <code>await</code>, cannot use in:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Event subscription is pretty much the only time returning void from an asynchronous method</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">LoadStockPrice</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span>{</div><div class="line">	<span class="keyword">string</span> ticker = tickerInput.Text;</div><div class="line">	<span class="keyword">decimal</span> price = <span class="keyword">await</span> stockPriceService.FecthPriceAsync(ticker);</div><div class="line">	priceDisplay.Text = price.ToString(<span class="string">&quot;c&quot;</span>);</div><div class="line">}</div><div class="line"></div><div class="line">loadStockPriceButton.Click += LoadStockPrice;</div></pre></td></tr></table></figure>
+<h4 id="Flow-of-await-expressions"><a href="#Flow-of-await-expressions" class="headerlink" title="Flow of await expressions"></a>Flow of await expressions</h4><p>Restrictions on <code>await</code>, CANNOT use in:</p>
 <ul class="ui list">
 <li><code>catch</code> or <code>finally</code> blocks</li>
 <li>non-async anonymous functions</li>
 <li>the body of a <code>locak</code> statement</li>
 <li>unsafe code</li>
 </ul>
-
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AddPayment(<span class="keyword">await</span> employee.GetHourlyRateAsync() *	<span class="comment">// return Task&lt;decimal&gt;</span></div><div class="line">			<span class="keyword">await</span> timeSheet.GetHoursWorkedAsync(employee.Id) );	<span class="comment">//return Task&lt;int&gt;</span></div></pre></td></tr></table></figure>
+<p>When execution reaches the <code>await</code> expression, if the operation has already completed, it just keeps going.<br>If the operation failed and it&#x2019;s captured an exception to represent that failure, the exception is thrown.<br>Otherwise, a continuation is attached to the asynchronous operation, and the method returns, and you move on to the next part of the program.<br>It&#x2019;s up to the asynchronous operation to make sure that the method resumes on the right thread-typically either a thread-pool thread or the UI thread where that makes sense.</p>
+<h4 id="Asynchronous-anonymous-functions"><a href="#Asynchronous-anonymous-functions" class="headerlink" title="Asynchronous anonymous functions"></a>Asynchronous anonymous functions</h4>
                         
                     </div>
 
@@ -217,6 +219,18 @@
     </span>
     <span class="post-description-item">
         
+
+    <span>
+        <i class="tags icon"></i>
+    </span>
+
+    
+    <span class="ui tiny label">
+        <a href="/tags/CSharp/">CSharp</a>
+    </span>
+
+    
+
     </span>
 </div>
 
@@ -262,7 +276,7 @@
 
                 <div class="ui sticky article-toc" id="article-toc">
                     <!-- toc -->
-                    <ol class="ui ordered list"><li><a href="#Asynchrony-C-5-NET4-5"><span>Asynchrony (C# 5, .NET4.5)</span></a><ol><li><a href="#Ch-15-Asynchrony-with-async-await"><span>Ch 15: Asynchrony with async/await</span></a><ol><li><a href="#Three-return-type"><span>Three return type</span></a></li><li><a href="#Awaitable-Pattern"><span>Awaitable Pattern</span></a></li></ol></li></ol></li></ol>
+                    <ol class="ui ordered list"><li><a href="#Asynchrony-C-5-NET4-5"><span>Asynchrony (C# 5, .NET4.5)</span></a><ol><li><a href="#Ch-15-Asynchrony-with-async-await"><span>Ch 15: Asynchrony with async/await</span></a><ol><li><a href="#Three-return-type"><span>Three return type</span></a></li><li><a href="#Flow-of-await-expressions"><span>Flow of await expressions</span></a></li><li><a href="#Asynchronous-anonymous-functions"><span>Asynchronous anonymous functions</span></a></li></ol></li></ol></li></ol>
                 </div>
 
             </div>
