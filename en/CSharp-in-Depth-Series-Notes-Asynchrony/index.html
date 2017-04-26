@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://liyuewang.com/en/CSharp-in-Depth-Series-Notes-Asynchrony/index.html">
 <meta property="og:site_name" content="对生存的领会">
 <meta property="og:description" content="C# 1: CoreC# 2: Solve the Issues of C# 1C# 3: Lambda, LINQ &amp;#x2013; CSharp in Depth Series Notes: LINQC# 4: Dynamic bindingC# 5: Asynchrony &amp;#x2013; CShap in Depth Series Notes: AsynchronyC# 6:C# 7-(2">
-<meta property="og:updated_time" content="2017-04-11T02:16:23.270Z">
+<meta property="og:updated_time" content="2017-04-11T02:18:40.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CShap in Depth Series Notes: Asynchrony">
 <meta name="twitter:description" content="C# 1: CoreC# 2: Solve the Issues of C# 1C# 3: Lambda, LINQ &amp;#x2013; CSharp in Depth Series Notes: LINQC# 4: Dynamic bindingC# 5: Asynchrony &amp;#x2013; CShap in Depth Series Notes: AsynchronyC# 6:C# 7-(2">
@@ -204,6 +204,11 @@
 </ul>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AddPayment(<span class="keyword">await</span> employee.GetHourlyRateAsync() *	<span class="comment">// return Task&lt;decimal&gt;</span></div><div class="line">			<span class="keyword">await</span> timeSheet.GetHoursWorkedAsync(employee.Id) );	<span class="comment">//return Task&lt;int&gt;</span></div></pre></td></tr></table></figure>
 <p>When execution reaches the <code>await</code> expression, if the operation has already completed, it just keeps going.<br>If the operation failed and it&#x2019;s captured an exception to represent that failure, the exception is thrown.<br>Otherwise, a continuation is attached to the asynchronous operation, and the method returns, and you move on to the next part of the program.<br>It&#x2019;s up to the asynchronous operation to make sure that the method resumes on the right thread-typically either a thread-pool thread or the UI thread where that makes sense.</p>
+<p>What does it means to <code>return</code> from an asynchronous method:</p>
+<ul class="ui list">
+<li>This is the  first <code>await</code></li>
+</ul>
+<p>The <code>*</code> operation has to wait for both asynchronous operations completed?</p>
 <h4 id="Asynchronous-anonymous-functions"><a href="#Asynchronous-anonymous-functions" class="headerlink" title="Asynchronous anonymous functions"></a>Asynchronous anonymous functions</h4>
                         
                     </div>
